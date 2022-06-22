@@ -15,8 +15,8 @@
  *                deriving the global solution to A(M,N) * x(N), the MPI_Allreduce collective is called in 
  *                placed on Darray y, effectively storing the solution Darray y(M) in each process row. 
  *                Lastly, solution Darray y(M) is redistributed into Darray X(N) by multiplying each MPI 
- *                domains' y(n) by an identity matrix(m,n). This final commputation effectively stores the
- *                same solution to the computation derived from A(M,N)*y(N) in each process column x(M).
+ *                domains' y(m) by an identity matrix(m,n). This final commputation effectively stores the
+ *                same solution to the computation derived from A(M,N)*y(N) in each process column x(n).
  * 
  */ 
 

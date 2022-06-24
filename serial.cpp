@@ -19,8 +19,8 @@ template <typename T> void xIDy(Matrix<T> &xIDy, Darray<T> &y, Darray<T> &x);
 /* program entry point */ 
 int main(int argc, char *argv[]) {
   
-  const int M = atoi(argv[1]);  /* global rows */
-  const int N = atoi(argv[2]);  /* global cols */
+  const int M = 1024;  /* global rows */
+  const int N = 1024;  /* global cols */
   
   Matrix<int> A(M, N); 
   Darray<int> x(N); 

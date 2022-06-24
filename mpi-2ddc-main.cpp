@@ -25,10 +25,10 @@ int main(int argc, char *argv[]) {
   double start_timer;
 
   /* grid sizes to be run with P*Q MPI Processes via -np at runtime */
-  const int M = atoi(argv[1]);  /* global rows */
-  const int N = atoi(argv[2]);  /* global cols */
-  const int P = atoi(argv[3]);  /* process rows */
-  const int Q = atoi(argv[4]);  /* process cols */
+  const int M = 1024;  /* for CMD, use: atoi(argv[1])   global rows */
+  const int N = 1024;                                 /* global cols */
+  const int P = 2;                                    /* process rows */
+  const int Q = 2;                                    /* process cols */
 
   /* start mpi */
   MPI_Init(&argc, &argv);

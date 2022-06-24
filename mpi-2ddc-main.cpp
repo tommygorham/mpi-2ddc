@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
   double yAx_time = MPI_Wtime() - start_timer; // via pg. 105 of "Using MPI, 3rd Edition"
    
  /* redistribute y back into x with identity matrix, second param can also be &y(0) */ 
-  MPI_Allreduce(MPI_IN_PLACE, y.getDarray(), m, MPI_DOUBLE, MPI_SUM, row_comm); /* send buf same as receive */
+  MPI_Allreduce(MPI_IN_PLACE, y.getDarray(), m, MPI_INT, MPI_SUM, row_comm); /* send buf same as receive */
   /* SOLUTION1: vector y is stored in each process row (or node row)  */ 
   // y.printDarray(node_name); 
 
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
   xIDy(id_A, y, x); /* this computes: y(m) * id_A(m,n) = x(n); */ 
   
  /* collective to also have solution stored in every process col via the column communicator group */ 
-  MPI_Allreduce(MPI_IN_PLACE, x.getDarray(), n, MPI_DOUBLE, MPI_SUM, col_comm);  
+  MPI_Allreduce(MPI_IN_PLACE, x.getDarray(), n, MPI_INT, MPI_SUM, col_comm);  
   /* SOLUTION2: */ // x.printDarray(node_name); 
 
   /* print time from rank 0 because very little deviation with square matrices due to load balancing */ 

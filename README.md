@@ -2,13 +2,41 @@
 
 A two-dimensional domain decomposition using MPI to communicate and reduce matrix & array computations in the equation y=Ax.
 
+Serial Equation:   A(M,N) * x(N) = y(M)  (where M = Global Matrix Rows, N = Global Matrix Cols) 
+
+MPI 2DDC Equation: A(m,n) * x(n) = y(m) (where m = Logical MPI Grid Rows, n = Logical MPI Grid Cols)
+
+Essentially, (m,n) are local to mpi processes, representing their 2D sub-domain 
+
+Currently, the default sizes are: 
+
+M = 1024
+
+N = 1024
+
+P = 2
+
+Q = 2
+
+Meaning the number of processes to pass mpirun -np should be 4 for now
+
 ### Compile: make 
 
-### Run: mpirun -np <P*Q> ./runmpi M N P Q
+### Run: mpirun -np 4 ./runmpi
 
-M and N have only been tested with square martices, so its best to ensure these parameters are the same. Also, make sure that P*Q = the number of processors passed to the -np flag. 
+M and N have only been tested with square martices, so its best to ensure these parameters are the same. 
+
+## Important
+
+If you change the sizes in the source code, make sure that P*Q = the number of processors passed to the -np flag. 
 
       E.g., mpirun -np 4 ./runmpi 1024 1024 2 2 
+      or,   mpirun -np 8 ./runmpi 1024 1024 4 4 
+The default way to run the code is: 
+
+      mpirun -np 4 ./runmpi 
+      ./runserial 
+
 
 _Note:_ The two terminal commands above are just defaults for running [mpi-2ddc-main.cpp](https://github.com/tommygorham/mpi-2ddc/blob/main/mpi-2ddc-main.cpp)
 To compile the visual 5x5 demo, run the following commands: 

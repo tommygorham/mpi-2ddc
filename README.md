@@ -2,10 +2,17 @@
 
 [This program](https://github.com/tommygorham/mpi-2ddc/blob/main/src/mpi-2ddc-main.cpp) is a two-dimensional domain decomposition using MPI to communicate and reduce matrix & array computations in the equation y=Ax. Essentially, in using MPI, we can take the serial equation and break it into smaller chunks to have each processor or node do less work, therefore, speeding up our computation. 
 
-# Four Core Standalone Computer Speedup with 4 MPI Processes 
+# 4-Core Standalone Computer Speedup with 4 MPI Processes 
 
-IMAGE HERE
+<p align="center">
+<img src="https://github.com/tommygorham/mpi-2ddc/blob/main/results/standalone_4core_speedup_16k16k.png" height="300px" />
+</p>
 
+```math
+Amdahl's Law     = Serial Time / Parallel Time 
+parallel speedup = 3.30635s / .792755s
+parallel speedup = 4.17078s
+```
 
 # Details 
 **Serial Equation:**   A(M,N) * x(N) = y(M)  (where M = Global Matrix Rows, N = Global Matrix Cols) 
@@ -18,9 +25,9 @@ In the MPI eq., (m,n) are local to mpi processes, representing their 2D sub-doma
 
 Currently, the default sizes are: 
 
-M = 1024
+M = 16384
 
-N = 1024
+N = 16384
 
 P = 2
 

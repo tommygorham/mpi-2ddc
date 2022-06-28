@@ -1,12 +1,20 @@
 # mpi-2ddc
 
-A two-dimensional domain decomposition using MPI to communicate and reduce matrix & array computations in the equation y=Ax.
+[This program](https://github.com/tommygorham/mpi-2ddc/blob/main/src/mpi-2ddc-main.cpp) is a two-dimensional domain decomposition using MPI to communicate and reduce matrix & array computations in the equation y=Ax. Essentially, in using MPI, we can take the serial equation and break it into smaller chunks to have each processor or node do less work, therefore, speeding up our computation. 
 
-Serial Equation:   A(M,N) * x(N) = y(M)  (where M = Global Matrix Rows, N = Global Matrix Cols) 
+# Four Core Standalone Computer Speedup with 4 MPI Processes 
 
-MPI 2DDC Equation: A(m,n) * x(n) = y(m) (where m = Logical MPI Grid Rows, n = Logical MPI Grid Cols)
+IMAGE HERE
 
-Essentially, (m,n) are local to mpi processes, representing their 2D sub-domain 
+
+# Details 
+**Serial Equation:**   A(M,N) * x(N) = y(M)  (where M = Global Matrix Rows, N = Global Matrix Cols) 
+
+Becomes 
+
+**MPI 2DDC Equation:** A(m,n) * x(n) = y(m) (where m = Logical MPI Grid Rows, n = Logical MPI Grid Cols)
+
+In the MPI eq., (m,n) are local to mpi processes, representing their 2D sub-domain 
 
 Currently, the default sizes are: 
 

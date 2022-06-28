@@ -19,8 +19,8 @@ template <typename T> void xIDy(Matrix<T> &xIDy, Darray<T> &y, Darray<T> &x);
 /* program entry point */ 
 int main(int argc, char *argv[]) {
   
-  const int M = 1024;  /* global rows */
-  const int N = 1024;  /* global cols */
+  const int M = 16384;  /* global rows */
+  const int N = 16384;  /* global cols */
   
   Matrix<int> A(M, N); 
   Darray<int> x(N); 
@@ -37,12 +37,12 @@ int main(int argc, char *argv[]) {
   std::chrono::duration<double> yAx_time = end_timer - start_timer; 
   
   // print solution 
-  /* for(int i = 0; i < M; ++i)
+  /*  for(int i = 0; i < M; ++i)
   {
       std::cout << "\n" << y(i); 
   }
-  */
-  std::cout << "\n\nyAx took: " << yAx_time.count() << " seconds" << std::endl; 
+  */ 
+  std::cout <<"\nyAx took: " <<  yAx_time.count() << " seconds" << "\nto compute A(" << M << "," << N << ") * x(" << N << ") in serial" << std::endl; 
   
   return 0; 
 }

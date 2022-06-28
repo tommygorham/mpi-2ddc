@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
   double start_timer;
 
   /* grid sizes to be run with P*Q MPI Processes via -np at runtime */
-  const int M = 1024;  /* for CMD, use: atoi(argv[1])   global rows */
-  const int N = 1024;                                 /* global cols */
+  const int M = 16384;  /* for CMD, use: atoi(argv[1])   global rows */
+  const int N = 16384;                                 /* global cols */
   const int P = 2;                                    /* process rows */
   const int Q = 2;                                    /* process cols */
 
@@ -115,8 +115,10 @@ int main(int argc, char *argv[]) {
   /* print time from rank 0 because very little deviation with square matrices due to load balancing */ 
   if(world_rank == 0)
   {
-      std::cout <<"\nyAx took: " <<  yAx_time << " seconds" << std::endl;  
+      std::cout <<"\nyAx took: " <<  yAx_time << " seconds" << "\nto compute A(" << M << "," << N << ") * x(" << N <<
+	  ") with MPI"<< std::endl; 
   }
+
   /* free mpi sub-communicators */
   MPI_Comm_free(&row_comm); 
   MPI_Comm_free(&col_comm); 

@@ -51,7 +51,9 @@ The default way to run the code is:
 
       mpirun -np 4 ./runmpi 
       ./runserial 
+If you have 4 processor cores available, you can just run 
 
+      mpirun ./runmpi 
 
 _Note:_ The two terminal commands above are just defaults for running [mpi-2ddc-main.cpp](https://github.com/tommygorham/mpi-2ddc/blob/main/mpi-2ddc-main.cpp)
 To compile the visual 5x5 demo, run the following commands: 

@@ -6,6 +6,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 #include <iostream> 
+#include <string_view> 
 
 // NOTE: definitions in class header since we are using templates 
 template <typename T> class Matrix{
@@ -28,9 +29,20 @@ public:
 
     void Resize(int  Mprime, int  Nprime); //if we copy a matrix of different num rows, cols
     
-    // member function to print matrix 
-    void printMat(char* node_name) {
-        std::cout << "\nNode : " << node_name <<  std::endl;
+    // member function to print mpi matrix 
+    void printMatMPI(char* node_name, int mpi_rank) {
+        std::cout << "\nMPI Rank: " << mpi_rank << " On Node : " << node_name <<  std::endl;
+        for (int i = 0; i < (*this).Rows(); ++i) {
+            for (int j = 0; j < (*this).Cols(); ++j) {
+            std::cout << (*this)(i,j) << " "; 
+            }
+            std::cout << ("\n"); 
+        }
+        std::cout << ("\n"); 
+     }
+   
+   void printNameAndMat(std::string_view name) {
+	   std::cout << "\nMatrix " << name << "\n"; 
         for (int i = 0; i < (*this).Rows(); ++i) {
             for (int j = 0; j < (*this).Cols(); ++j) {
             std::cout << (*this)(i,j) << " "; 
@@ -47,6 +59,15 @@ public:
             for (int j = 0; j < (*this).Cols(); ++j) {
             (*this)(i,j) = fill_a;  
             fill_a++; 
+            }
+        }
+    }
+   void fillMatInt() {
+	    int fill = 1; 
+        for (int i = 0; i < (*this).Rows(); ++i) {
+            for (int j = 0; j < (*this).Cols(); ++j) {
+            (*this)(i,j) = fill;  
+            // fill++;  
             }
         }
     }

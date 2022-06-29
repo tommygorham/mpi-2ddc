@@ -9,6 +9,7 @@
 #ifndef DARRAY_H
 #define DARRAY_H
 #include <iostream> 
+#include <string_view> 
 
 template <typename T> 
 class Darray {
@@ -30,17 +31,24 @@ public:
   T *getDarray() { return &m_data[0]; } 
   
   // member function to print matrix 
-    void printDarray(char* node_name) {
+  void printArrayMPI(char* node_name) {
         std::cout << "\nNode : " << node_name <<  std::endl;
         for (int i = 0; i < (*this).size(); ++i) {
             std::cout << (*this)(i) << "\n";  
             }
     }
-        
+   
+  void printNameAndArray(std::string_view name) {
+	    std::cout << "Vector " << name << "\n";  
+		for (int i = 0; i < (*this).size(); ++i) {
+            std::cout << (*this)(i) << "\n";  
+            }
+    }
+    
     // member function to fill an array with a constant var 
     void fillDarrayInt() {
         for (int i = 0; i < (*this).size(); ++i) {
-            (*this)(i) = 1.0;   
+            (*this)(i) = 2;   
             }
     }
     

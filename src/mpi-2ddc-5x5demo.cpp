@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
   MPI_Allreduce(MPI_IN_PLACE, y.getDarray(), m, MPI_INT, MPI_SUM, row_comm); /* send buf same as receive */
   
   /* SOLUTION1: vector y is stored in each process row (or node row)  */ 
-  y.printDarray(node_name); 
+  y.printArrayMPI(node_name); 
 
   /* fill identity matrix appropriately to redistribute y back into x */ 
   i_increment = M / P; /* every rank increment this many rows globally */

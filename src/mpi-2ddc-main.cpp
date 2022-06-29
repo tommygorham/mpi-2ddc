@@ -9,6 +9,7 @@
 #include "darray.h" /* templated array class     */ 
 #include <iostream> /* cout, cin, etc...         */  
 #include <mpi.h>    /* message passing interface */  
+#include <string_view> 
 
 /* multiply function prototypes, TODO: change to one function & decide on const */
 template <typename T> void yAx(const Matrix<T> &A, const Darray<T> &x, Darray<T> &y);  
@@ -25,11 +26,18 @@ int main(int argc, char *argv[]) {
   double start_timer;
 
   /* grid sizes to be run with P*Q MPI Processes via -np at runtime */
-  const int M = 16384;  /* for CMD, use: atoi(argv[1])   global rows */
-  const int N = 16384;                                 /* global cols */
-  const int P = 2;                                    /* process rows */
-  const int Q = 2;                                    /* process cols */
-
+  int M = 5;  /* global rows */
+  int N = 5;  /* global cols */
+  const int P = 2;  /* process rows */
+  const int Q = 2;  /* process cols */
+ 
+  // check if we need to change size/process grid from terminal args 
+  if(argc == 3)
+  {
+	M = atoi(argv[1]); 
+    N = atoi(argv[2]); 
+  } 
+   
   /* start mpi */
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
@@ -70,8 +78,11 @@ int main(int argc, char *argv[]) {
   Darray<int> y(m); 
   Matrix<int> id_A(m, n); /* id matrix for xIDy function */
 
-  /* initialize matrix A, each sub-domain will begin with the value of the mpi_rank */   
-  A.fillMatIntRank(world_rank);  
+  /* initialize matrix A, two-methods to choose from 
+  * method 1 is fillMatIntRank(world_rank) where each sub-domain will begin with the value of the mpi_rank    
+  * method 2 is fillMatInt() which fills it with 1's, useful for testing the correctness when comparing with the otherprograms */ 
+  //A.fillMatIntRank(world_rank); // the cool way  
+  A.fillMatInt(); // use for testing 
 
   //process row 0 (node 0) make Darray x 
   if (local_row == 0) { x.fillDarrayInt(); } 
@@ -89,7 +100,6 @@ int main(int argc, char *argv[]) {
  /* redistribute y back into x with identity matrix, second param can also be &y(0) */ 
   MPI_Allreduce(MPI_IN_PLACE, y.getDarray(), m, MPI_INT, MPI_SUM, row_comm); /* send buf same as receive */
   /* SOLUTION1: vector y is stored in each process row (or node row)  */ 
-  // y.printDarray(node_name); 
 
   /* fill identity matrix appropriately to redistribute y back into x */ 
   i_increment = M / P; /* every rank increment this many rows globally */
@@ -111,6 +121,14 @@ int main(int argc, char *argv[]) {
  /* collective to also have solution stored in every process col via the column communicator group */ 
   MPI_Allreduce(MPI_IN_PLACE, x.getDarray(), n, MPI_INT, MPI_SUM, col_comm);  
   /* SOLUTION2: */ // x.printDarray(node_name); 
+  
+  // if size is small, show solution 
+  if(M*N <= 100)
+  {
+  	MPI_Barrier(MPI_COMM_WORLD); 
+    y.printArrayMPI(node_name); 
+	MPI_Barrier(MPI_COMM_WORLD); 
+} 
 
   /* print time from rank 0 because very little deviation with square matrices due to load balancing */ 
   if(world_rank == 0)

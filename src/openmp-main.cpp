@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   int nthreads = omp_get_max_threads();  
 
   // check if we need to change size/threads from terminal args 
-  if(argc == 4)
+  if (argc == 4)
   {
 	 M = atoi(argv[1]); 
 	 N = atoi(argv[2]); 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
   double yAx_time = omp_get_wtime() - start_timer;
   
    // print if size is small  
-  if(M*N <= 100)
+  if (M*N <= 100)
   {
     A.printNameAndMat(Aname); 
 	x.printNameAndArray(xname);

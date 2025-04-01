@@ -32,10 +32,10 @@ int main(int argc, char *argv[]) {
   const int Q = 2;  /* process cols */
  
   // check if we need to change size/process grid from terminal args 
-  if(argc == 3)
+  if (argc == 3)
   {
-	M = atoi(argv[1]); 
-    N = atoi(argv[2]); 
+     M = atoi(argv[1]); 
+     N = atoi(argv[2]); 
   } 
    
   /* start mpi */
@@ -123,15 +123,15 @@ int main(int argc, char *argv[]) {
   /* SOLUTION2: */ // x.printDarray(node_name); 
   
   // if size is small, show solution 
-  if(M*N <= 100)
+  if (M*N <= 100)
   {
-  	MPI_Barrier(MPI_COMM_WORLD); 
-    y.printArrayMPI(node_name); 
-	MPI_Barrier(MPI_COMM_WORLD); 
-} 
+    MPI_Barrier(MPI_COMM_WORLD); 
+    y.printArrayMPI(node_name, world_rank); 
+    MPI_Barrier(MPI_COMM_WORLD); 
+  } 
 
   /* print time from rank 0 because very little deviation with square matrices due to load balancing */ 
-  if(world_rank == 0)
+  if (world_rank == 0)
   {
       std::cout <<"\nyAx took: " <<  yAx_time << " seconds" << "\nto compute A(" << M << "," << N << ") * x(" << N <<
 	  ") with MPI"<< std::endl; 

@@ -84,25 +84,22 @@ int main(int argc, char *argv[]) {
 
   /* initialize matrix A, each sub-domain will begin with the value of the mpi_rank */   
   A.fillMatIntRank(world_rank);  
-  // DEMO1:  if(world_rank == 0) { std::cout << "\ny=Ax \nMatrix A\n"; } 
-  // DEMO1:  A.printMat(node_name); 
+  if (world_rank == 0) { std::cout << "\ny=Ax \nMatrix A\n"; } 
+  A.printMatMPI(node_name, world_rank); 
 
   //process row 0 (node 0) make Darray x 
   if (local_row == 0) { x.fillDarrayInt(); } 
 
   /* ranks broadcast their local Darray x with to other nodes across columns */
   MPI_Bcast(x.getDarray(), n, MPI_INT, 0, col_comm);
-  // DEMO2: if(world_rank == 0) { std::cout << "\n* Vector x\n"; }  
-  // DEMO2: x.printDarray(node_name); 
+  if (world_rank == 0) { std::cout << "\n* Vector x\n"; }  
+  //x.printArrayMPI(node_name, world_rank); 
   
   /* do the computation */ 
   yAx(A,x,y);  /* this computes: A(m,n) * x(n) = y(m) */ 
  
  /* redistribute y back into x with identity matrix, second param can also be &y(0) */ 
   MPI_Allreduce(MPI_IN_PLACE, y.getDarray(), m, MPI_INT, MPI_SUM, row_comm); /* send buf same as receive */
-  
-  /* SOLUTION1: vector y is stored in each process row (or node row)  */ 
-  y.printArrayMPI(node_name); 
 
   /* fill identity matrix appropriately to redistribute y back into x */ 
   i_increment = M / P; /* every rank increment this many rows globally */
@@ -123,7 +120,7 @@ int main(int argc, char *argv[]) {
   
  /* collective to also have solution stored in every process col via the column communicator group */ 
   MPI_Allreduce(MPI_IN_PLACE, x.getDarray(), n, MPI_INT, MPI_SUM, col_comm);  
-  /* SOLUTION2: */ // x.printDarray(node_name); 
+  x.printArrayMPI(node_name, world_rank); 
   
   /* free mpi sub-communicators */
   MPI_Comm_free(&row_comm); 

@@ -1,6 +1,5 @@
 /* Program name: matrix.h
  * Description: class definition to store data logically in 2 dimensions, representing a matrix 
- *             
  */ 
 
 #ifndef MATRIX_H
@@ -13,10 +12,10 @@ template <typename T> class Matrix{
 public: 
     // constructor: uses size_t to generalize unsigned int, size_t defined in std namespace     
     Matrix(int  rows, int  cols) : m_rows(rows), m_cols(cols), m_data(new T[rows*cols]) {} 
-	
-	  // destructor 
+    
+    // destructor 
     virtual ~Matrix() { delete[] m_data; }
-
+    
     // overload "=" for copying 
     Matrix &operator=(const Matrix<T> &rhs);
         
@@ -74,7 +73,7 @@ public:
 
     T *get_Matrix() { return &m_data[0]; } // can use for mpi calls
     
-    //const size_t Index(const size_t rows, const size_t cols) const;
+    const size_t Index(const size_t rows, const size_t cols) const;
     
     // matrix dimensions accessors 
     int  Rows() const {return m_rows;}
